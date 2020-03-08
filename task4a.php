@@ -6,10 +6,10 @@ $arr = BruteDecode($password);
 PrintArray($arr);
 
 echo "</br>Задание 5c:</br>";
-$pass1 = [4,3,6];
-$pass2Se = [2,3,4];
+$pass1 = [4,3,6,4,7,6];
+$pass2Se = [2,3,4,2,3,4];
 
-Task5cDecode($pass1, $pass2Se);
+PrintArray(Task5cDecode($pass1, $pass2Se));
 
 function BruteDecode(array $pass, array &$try = [],$i = 0){
     $try[] = 0;
@@ -32,20 +32,28 @@ function PrintArray(array $arr){
     echo '</br>';
 }
 
-function Task5cDecode($pass1, $pass2Se, $i = 0){
-    $k = ceil(( (count($pass1)) * 1.0)/2);
-    if($pass1 [$k] > 5){
-        $pass2[] = $pass2Se[2];
-        $pass2[] = $pass2Se[1];
-        $pass2[] = $pass2Se[0];
-        PrintArray($pass2);
-        echo "</br> Число сформировано: \"цифра первого разряда из \$pass2Se\" . \"цифра второго разряда из \$pass2Se\" . \"цифра третьего разряда из \$pass2Se\"";
-    }else{
-        $pass2[] = $pass2Se[1];
-        $pass2[] = $pass2Se[0];
-        $pass2[] = $pass2Se[2];
-        PrintArray($pass2);
-        echo "</br> Число сформировано: \"цифра второго разряда из \$pass2Se\" . \"цифра третьего разряда из \$pass2Se\" . \"цифра первого разряда из \$pass2Se\"";
+function Task5cDecode($pass1, $pass2Se){
+    if ((count($pass1) !== count($pass2Se)) || (count($pass1) % 3 !== 0)){
+        echo "Длины чисел некорректны </br>";
+        return array();
+    }
+    else{
+        for($i = 0; $i < count($pass1); $i += 3){
+        $k = $pass1[$i + 1];
+        if($k > 5){
+            $pass2[] = $pass2Se[$i + 2];
+            $pass2[] = $pass2Se[$i + 1];
+            $pass2[] = $pass2Se[$i];
+            //PrintArray($pass2);
+            //echo "</br> Число сформировано: \"цифра первого разряда из \$pass2Se\" . \"цифра второго разряда из \$pass2Se\" . \"цифра третьего разряда из \$pass2Se\"";
+        }else{
+            $pass2[] = $pass2Se[$i + 1];
+            $pass2[] = $pass2Se[$i + 0];
+            $pass2[] = $pass2Se[$i + 2];
+            //PrintArray($pass2);
+            //echo "</br> Число сформировано: \"цифра второго разряда из \$pass2Se\" . \"цифра третьего разряда из \$pass2Se\" . \"цифра первого разряда из \$pass2Se\"";
+        }}
+        return $pass2;
     }
 }
 ?>
